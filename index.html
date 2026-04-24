@@ -1,345 +1,1122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurante Tia Chica | Self-Service & Churrasco | Jacareí</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            line-height: 1.7; 
-            color: #2c2c2c; 
-            overflow-x: hidden;
-        }
-        
-        /* CORES PROFISSIONAIS */
-        :root {
-            --primary: #FF6B35;
-            --primary-dark: #E55A2B;
-            --dark: #1A1A1A;
-            --gray-dark: #333;
-            --gray: #666;
-            --light: #F8F9FA;
-            --white: #FFFFFF;
-            --shadow: 0 20px 60px rgba(0,0,0,0.1);
-            --shadow-hover: 0 30px 80px rgba(0,0,0,0.15);
-        }
-        
-        /* HEADER ELEGANTE */
-        header { 
-            background: rgba(255,255,255,0.95); 
-            backdrop-filter: blur(20px);
-            padding: 1rem 0; 
-            position: fixed; 
-            width: 100%; 
-            top: 0; 
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        
-        .logo { 
-            font-size: 1.8rem; 
-            font-weight: 700; 
-            color: var(--primary); 
-            text-decoration: none;
-        }
-        
-        nav ul { 
-            display: flex; 
-            list-style: none; 
-            gap: 2rem;
-        }
-        nav a { 
-            color: var(--gray-dark); 
-            text-decoration: none; 
-            font-weight: 500; 
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        nav a:hover { color: var(--primary); }
-        nav a::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; 
-            background: var(--primary); transition: width 0.3s ease;
-        }
-        nav a:hover::after { width: 100%; }
-        
-        /* HERO ELEGANTE */
-        .hero { 
-            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%), 
-                        url('https://images.unsplash.com/photo-1571585191419-8a348fc5e1a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            color: white;
-            position: relative;
-        }
-        .hero::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(255,107,53,0.8), rgba(229,90,43,0.6));
-        }
-        .hero-content { position: relative; z-index: 2; max-width: 800px; }
-        .hero h1 { 
-            font-size: clamp(3rem, 8vw, 6rem); 
-            font-weight: 700; 
-            margin-bottom: 1.5rem; 
-            letter-spacing: -2px;
-        }
-        .hero-subtitle { 
-            font-size: 1.4rem; 
-            margin-bottom: 3rem; 
-            opacity: 0.95;
-            font-weight: 300;
-        }
-        
-        .pricing-hero { 
-            background: rgba(255,255,255,0.1); 
-            backdrop-filter: blur(20px);
-            padding: 2.5rem 4rem; 
-            border-radius: 25px; 
-            border: 1px solid rgba(255,255,255,0.2);
-            display: inline-block;
-        }
-        .pricing-hero h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .price-big { 
-            font-size: 4rem; 
-            font-weight: 700; 
-            color: white; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        /* SECTIONS */
-        section { padding: 120px 0; }
-        .section-title { 
-            text-align: center; 
-            font-size: clamp(2.5rem, 5vw, 4rem); 
-            font-weight: 600; 
-            margin-bottom: 4rem; 
-            color: var(--dark);
-        }
-        
-        /* PRICING CARDS ELEGANTES */
-        .pricing-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
-            gap: 3rem; 
-            margin-top: 4rem;
-        }
-        .price-card { 
-            background: white; 
-            padding: 3.5rem 2.5rem; 
-            border-radius: 25px; 
-            text-align: center; 
-            box-shadow: var(--shadow);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 1px solid rgba(255,107,53,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .price-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.1), transparent);
-            transition: left 0.6s;
-        }
-        .price-card:hover::before { left: 100%; }
-        .price-card:hover { 
-            transform: translateY(-15px); 
-            box-shadow: var(--shadow-hover);
-        }
-        .price-icon { font-size: 4rem; color: var(--primary); margin-bottom: 1.5rem; }
-        .price-title { font-size: 1.5rem; font-weight: 600; color: var(--dark); margin-bottom: 1rem; }
-        .price-value { 
-            font-size: 3.5rem; 
-            font-weight: 700; 
-            color: var(--primary); 
-            margin-bottom: 1rem;
-        }
-        .price-desc { color: var(--gray); font-size: 1.1rem; margin-bottom: 2rem; }
-        
-        /* INFO GRID */
-        .info-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2.5rem; 
-            margin-top: 4rem;
-        }
-        .info-card { 
-            background: white; 
-            padding: 3rem; 
-            border-radius: 20px; 
-            text-align: center; 
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-        .info-card:hover { transform: translateY(-5px); }
-        .info-icon { font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; }
-        .info-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: var(--dark); }
-        
-        /* MAPA */
-        #map { 
-            height: 500px; 
-            border-radius: 25px; 
-            box-shadow: var(--shadow);
-            margin-top: 3rem;
-            width: 100%;
-        }
-        
-        .whatsapp-btn { 
-            position: fixed; 
-            bottom: 30px; 
-            right: 30px; 
-            background: #25D366; 
-            color: white; 
-            width: 70px; 
-            height: 70px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 2rem; 
-            box-shadow: 0 10px 30px rgba(37,211,102,0.4);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(37,211,102,0.5); }
-        
-        footer { 
-            background: var(--dark); 
-            color: white; 
-            text-align: center; 
-            padding: 4rem 0 2rem;
-        }
-        .footer-content { max-width: 800px; margin: 0 auto; opacity: 0.8; }
-        
-        @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 1rem; }
-            nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-            section { padding: 80px 0; }
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>FitForge — Treino Personalizado</title>
+<meta name="theme-color" content="#07070F"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="FitForge"/>
+<link rel="manifest" href="./manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #07070F;
+  --bg2: #0F0F1C;
+  --bg3: #161626;
+  --card: #12121F;
+  --border: rgba(255,255,255,0.07);
+  --accent: #FF5A1F;
+  --accent2: #FF8C5A;
+  --gold: #FFB800;
+  --green: #00E87A;
+  --text: #F0F0F8;
+  --muted: rgba(240,240,248,0.45);
+  --muted2: rgba(240,240,248,0.2);
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --radius: 18px;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bot: env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden}
+#root{height:100%;position:relative;overflow:hidden}
+
+/* ── SCREENS ── */
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;transition:opacity .35s ease,transform .35s ease;will-change:transform,opacity}
+.screen.hidden{opacity:0;pointer-events:none;transform:translateX(40px)}
+.screen.slide-left{transform:translateX(-40px);opacity:0;pointer-events:none}
+
+/* ── NOISE TEXTURE ── */
+.noise::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+
+/* ── SPLASH SCREEN ── */
+#splash{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:40px 24px calc(var(--safe-bot) + 40px);background:var(--bg)}
+.splash-glow{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,31,.18) 0%,transparent 70%);top:-100px;left:50%;transform:translateX(-50%);pointer-events:none}
+.logo-mark{width:72px;height:72px;background:var(--accent);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:28px;box-shadow:0 20px 60px rgba(255,90,31,.4);animation:logoIn .8s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes logoIn{from{opacity:0;transform:scale(.5) rotate(-10deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.splash-tag{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;animation:fadeUp .6s .3s both}
+.splash-title{font-family:var(--font-display);font-size:clamp(42px,10vw,64px);font-weight:800;line-height:1;text-align:center;margin-bottom:16px;animation:fadeUp .6s .4s both}
+.splash-title span{color:var(--accent)}
+.splash-sub{font-size:16px;color:var(--muted);text-align:center;max-width:300px;line-height:1.6;animation:fadeUp .6s .5s both}
+.splash-cta{margin-top:48px;width:100%;max-width:340px;animation:fadeUp .6s .6s both}
+.btn-primary{width:100%;padding:18px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:var(--font-display);font-size:18px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent);pointer-events:none}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(255,90,31,.45)}
+.btn-primary:active{transform:translateY(0)}
+.btn-secondary{width:100%;padding:16px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-body);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:12px}
+.btn-secondary:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+.splash-features{display:flex;gap:20px;margin-top:36px;animation:fadeUp .6s .7s both}
+.feat{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px}
+.feat-icon{font-size:22px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── ONBOARDING ── */
+#onboarding{min-height:100%;display:flex;flex-direction:column;padding:calc(var(--safe-top) + 20px) 0 calc(var(--safe-bot) + 20px)}
+.ob-header{padding:0 24px 24px;flex-shrink:0}
+.ob-progress{display:flex;gap:5px;margin-bottom:20px}
+.ob-prog-bar{flex:1;height:3px;border-radius:10px;background:var(--bg3);overflow:hidden}
+.ob-prog-bar .fill{height:100%;border-radius:10px;background:var(--accent);transition:width .4s ease}
+.ob-back{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0;line-height:1}
+.ob-step-label{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
+.ob-title{font-family:var(--font-display);font-size:28px;font-weight:800;line-height:1.15}
+.ob-sub{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5}
+.ob-body{flex:1;padding:0 24px;overflow-y:auto}
+.ob-footer{padding:16px 24px 0;flex-shrink:0}
+
+/* ── FORM ELEMENTS ── */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.field input,.field select{width:100%;padding:16px 18px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;color:var(--text);font-family:var(--font-body);font-size:16px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.field input::placeholder{color:var(--muted2)}
+.field select option{background:var(--bg2)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field-hint{font-size:12px;color:var(--muted);margin-top:6px}
+
+/* ── OPTION CARDS ── */
+.options-grid{display:grid;gap:10px}
+.options-grid.cols2{grid-template-columns:1fr 1fr}
+.opt-card{padding:16px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px}
+.opt-card:hover{border-color:rgba(255,255,255,.15)}
+.opt-card.selected{border-color:var(--accent);background:rgba(255,90,31,.08)}
+.opt-icon{font-size:26px;flex-shrink:0}
+.opt-text{flex:1}
+.opt-text strong{display:block;font-size:15px;font-weight:700;font-family:var(--font-display);margin-bottom:2px}
+.opt-text span{font-size:12px;color:var(--muted)}
+.opt-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.opt-card.selected .opt-check{background:var(--accent);border-color:var(--accent)}
+.opt-card.selected .opt-check::after{content:'✓';font-size:12px;color:#fff;font-weight:700}
+
+/* ── DAYS SELECTOR ── */
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:16px}
+.day-tog{aspect-ratio:1;border-radius:10px;background:var(--card);border:1.5px solid var(--border);color:var(--muted);font-family:var(--font-display);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.day-tog.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.day-tog:hover{border-color:rgba(255,255,255,.2)}
+
+/* ── GENERATING SCREEN ── */
+#generating{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:40px 24px;text-align:center;background:var(--bg)}
+.gen-orb{width:120px;height:120px;border-radius:50%;background:conic-gradient(from 0deg,var(--accent),#ff8c5a,var(--accent));animation:spin 1.5s linear infinite;display:flex;align-items:center;justify-content:center;margin-bottom:32px;position:relative}
+.gen-orb-inner{width:96px;height:96px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:40px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-title{font-family:var(--font-display);font-size:26px;font-weight:800;margin-bottom:12px}
+.gen-sub{color:var(--muted);font-size:15px;max-width:280px;line-height:1.6}
+.gen-steps{margin-top:32px;display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px}
+.gen-step{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border-radius:12px;font-size:13px;color:var(--muted);transition:all .4s}
+.gen-step.done{color:var(--green)}
+.gen-step .gs-icon{font-size:18px;flex-shrink:0}
+.gen-step.active{color:var(--text);background:var(--bg3)}
+
+/* ── MAIN APP ── */
+#main{display:flex;flex-direction:column;min-height:100%}
+.app-header{padding:calc(var(--safe-top) + 20px) 22px 16px;flex-shrink:0;position:relative;z-index:10}
+.app-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.app-logo{font-family:var(--font-display);font-size:22px;font-weight:800}
+.app-logo span{color:var(--accent)}
+.header-actions{display:flex;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;color:var(--muted);transition:all .2s}
+.icon-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.user-greeting{font-size:13px;color:var(--muted)}
+.user-greeting strong{color:var(--text)}
+
+/* ── WEEK STRIP ── */
+.week-strip{display:flex;gap:7px;padding:0 22px 16px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.week-strip::-webkit-scrollbar{display:none}
+.wd-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 12px;border-radius:14px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;transition:all .2s;min-width:52px;flex-shrink:0;position:relative}
+.wd-btn:hover{border-color:rgba(255,255,255,.18)}
+.wd-btn.active{background:var(--accent);border-color:var(--accent)}
+.wd-label{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--muted)}
+.wd-btn.active .wd-label{color:#fff}
+.wd-dot{width:5px;height:5px;border-radius:50%}
+.wd-btn.complete .wd-dot{background:var(--green)}
+.wd-btn.active .wd-dot{background:rgba(255,255,255,.6)}
+
+/* ── DAY HEADER CARD ── */
+.day-hero{margin:0 22px 16px;padding:20px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);position:relative;overflow:hidden}
+.day-hero-glow{position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;filter:blur(60px);opacity:.25;pointer-events:none}
+.day-focus-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.day-name{font-family:var(--font-display);font-size:30px;font-weight:800;line-height:1}
+.day-prog-row{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.day-prog-label{font-size:12px;color:var(--muted)}
+.day-prog-label strong{color:var(--text)}
+.day-prog-track{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 12px}
+.day-prog-fill{height:100%;border-radius:10px;transition:width .5s cubic-bezier(.23,1,.32,1)}
+.day-prog-pct{font-family:var(--font-display);font-size:14px;font-weight:700}
+
+/* ── EX LIST ── */
+.ex-list{padding:0 22px;flex:1}
+.ex-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.ex-card:hover{border-color:rgba(255,255,255,.12)}
+.ex-card.done{opacity:.38}
+.ex-top{display:flex;align-items:center;gap:14px;padding:16px}
+.ex-check{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s}
+.ex-check.done{border-color:transparent}
+.ex-check.done::after{content:'✓';font-size:13px;font-weight:700;color:#000}
+.ex-info{flex:1;cursor:pointer}
+.ex-name{font-family:var(--font-display);font-size:17px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.ex-name.done{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.25)}
+.ex-badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:var(--font-body);letter-spacing:.3px}
+.badge-rest{background:rgba(255,255,255,.06);color:var(--muted)}
+.how-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--muted);font-family:var(--font-body);font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.how-btn:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.ex-num{font-family:var(--font-display);font-size:26px;font-weight:800;opacity:.12;flex-shrink:0}
+
+/* ── EXPANDED ── */
+.ex-expanded{border-top:1px solid var(--border);animation:slideDown .25s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.ex-img{width:100%;max-height:200px;object-fit:cover;display:block;background:var(--bg3)}
+.ex-img-wrap{position:relative;background:var(--bg3)}
+.ex-img-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg3)}
+.spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,.08);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.ex-details{padding:16px}
+.intro-box{padding:12px 14px;border-radius:12px;font-size:13px;font-weight:500;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:14px}
+.tabs{display:flex;gap:5px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px;margin-bottom:14px}
+.tab-btn{flex:1;padding:8px 4px;border:none;border-radius:8px;font-family:var(--font-body);font-size:11px;font-weight:800;cursor:pointer;transition:all .15s;letter-spacing:.5px;text-transform:uppercase;background:transparent;color:var(--muted)}
+.tab-btn.active{color:#000}
+.steps-list{display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.step-item:last-child{border-bottom:none}
+.step-num{min-width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px}
+.step-text{font-size:13px;font-weight:500;color:rgba(255,255,255,.78);line-height:1.6}
+.info-box{padding:14px;border-radius:12px;font-size:13px;font-weight:500;line-height:1.7}
+.mistake-box{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);color:rgba(255,180,180,.85)}
+
+/* ── WEEK SUMMARY ── */
+.week-summary{margin:0 22px 16px;display:flex;gap:10px}
+.sum-card{flex:1;padding:14px;background:var(--card);border-radius:14px;border:1px solid var(--border);text-align:center}
+.sum-val{font-family:var(--font-display);font-size:24px;font-weight:800}
+.sum-label{font-size:11px;color:var(--muted);margin-top:2px;font-weight:600}
+
+/* ── ADD WORKOUT FAB ── */
+.add-ex-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:transparent;border:1.5px dashed rgba(255,255,255,0.15);border-radius:16px;color:var(--muted);font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;margin-bottom:12px}
+.add-ex-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,90,31,.05)}
+.add-ex-btn .add-icon{width:32px;height:32px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:18px;font-style:normal}
+.plan-banner{margin:0 22px 16px;padding:18px 20px;background:linear-gradient(135deg,rgba(255,90,31,.12),rgba(255,90,31,.04));border:1px solid rgba(255,90,31,.2);border-radius:var(--radius);display:flex;align-items:center;gap:14px}
+.plan-banner-icon{font-size:28px;flex-shrink:0}
+.plan-banner-text strong{display:block;font-family:var(--font-display);font-size:15px;font-weight:800;margin-bottom:2px}
+.plan-banner-text span{font-size:12px;color:var(--muted)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:var(--safe-bot);animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg2);border-radius:24px 24px 0 0;padding:24px;max-height:85vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:40px;height:4px;border-radius:10px;background:rgba(255,255,255,.15);margin:0 auto 20px}
+.modal-title{font-family:var(--font-display);font-size:22px;font-weight:800;margin-bottom:20px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(var(--safe-bot) + 90px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#000;font-weight:700;padding:12px 24px;border-radius:30px;font-size:14px;z-index:300;opacity:0;transition:all .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── REST TIMER ── */
+.rest-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-text{font-size:14px;line-height:1.6}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:0;height:0}
+
+/* ── PROFILE PANEL ── */
+.profile-panel{position:fixed;inset:0;background:var(--bg);z-index:150;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.profile-panel.open{transform:translateX(0)}
+.profile-header{padding:calc(var(--safe-top) + 24px) 22px 20px;display:flex;align-items:center;gap:16px}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.profile-name{font-family:var(--font-display);font-size:22px;font-weight:800}
+.profile-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 22px 24px}
+.pstat{padding:16px;background:var(--card);border-radius:14px;border:1px solid var(--border);text-align:center}
+.pstat-val{font-family:var(--font-display);font-size:22px;font-weight:800}
+.pstat-label{font-size:11px;color:var(--muted);margin-top:2px}
+.section-title{font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:0 22px;margin-bottom:10px}
+.menu-item{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.menu-item:hover{background:rgba(255,255,255,.03)}
+.menu-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.menu-text{flex:1;font-size:15px;font-weight:600}
+.menu-arrow{color:var(--muted);font-size:14px}
+.danger-text{color:#ff5555}
+
+/* ── UTIL ── */
+.pb-safe{padding-bottom:calc(var(--safe-bot) + 100px)}
+.mt8{margin-top:8px}
+.gap8{gap:8px}
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="nav-container">
-                <a href="#" class="logo">
-                    <i class="fas fa-utensils"></i> Tia Chica
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#precos">Preços</a></li>
-                        <li><a href="#info">Informações</a></li>
-                        <li><a href="#localizacao">Localização</a></li>
-                    </ul>
-                </nav>
+<div id="root" class="noise">
+
+<!-- ══ SPLASH ══════════════════════════════════════════ -->
+<div id="splash" class="screen">
+  <div class="splash-glow"></div>
+  <div class="logo-mark">⚡</div>
+  <div class="splash-tag">Seu treino. Sua forma.</div>
+  <h1 class="splash-title">Fit<span>Forge</span></h1>
+  <p class="splash-sub">Treinos gerados por IA, personalizados para seu corpo, seus objetivos e sua rotina.</p>
+  <div class="splash-cta">
+    <button class="btn-primary" onclick="goTo('splash','onboarding')">Criar meu treino grátis →</button>
+    <button class="btn-secondary" onclick="tryLoadExisting()">Já tenho um treino</button>
+  </div>
+  <div class="splash-features">
+    <div class="feat"><span class="feat-icon">🤖</span>IA Personalizada</div>
+    <div class="feat"><span class="feat-icon">📊</span>Seu Perfil</div>
+    <div class="feat"><span class="feat-icon">✏️</span>Editável</div>
+    <div class="feat"><span class="feat-icon">📶</span>Offline</div>
+  </div>
+</div>
+
+<!-- ══ ONBOARDING ══════════════════════════════════════ -->
+<div id="onboarding" class="screen hidden">
+  <div class="ob-header">
+    <div class="ob-progress" id="ob-progress"></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <button class="ob-back" onclick="obBack()">←</button>
+      <span style="font-size:12px;color:var(--muted)" id="ob-step-counter"></span>
+    </div>
+    <div class="ob-step-label" id="ob-step-label"></div>
+    <h2 class="ob-title" id="ob-title"></h2>
+    <p class="ob-sub" id="ob-sub"></p>
+  </div>
+  <div class="ob-body" id="ob-body"></div>
+  <div class="ob-footer">
+    <button class="btn-primary" id="ob-next" onclick="obNext()">Continuar</button>
+  </div>
+</div>
+
+<!-- ══ GENERATING ══════════════════════════════════════ -->
+<div id="generating" class="screen hidden">
+  <div class="gen-orb"><div class="gen-orb-inner">⚡</div></div>
+  <h2 class="gen-title">Criando seu treino</h2>
+  <p class="gen-sub">Nossa IA está analisando seu perfil e montando o plano ideal para você.</p>
+  <div class="gen-steps">
+    <div class="gen-step active" id="gs1"><span class="gs-icon">👤</span> Analisando seu perfil...</div>
+    <div class="gen-step" id="gs2"><span class="gs-icon">🎯</span> Ajustando para seus objetivos...</div>
+    <div class="gen-step" id="gs3"><span class="gs-icon">💪</span> Selecionando exercícios...</div>
+    <div class="gen-step" id="gs4"><span class="gs-icon">📋</span> Montando o plano semanal...</div>
+    <div class="gen-step" id="gs5"><span class="gs-icon">✅</span> Finalizando...</div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══════════════════════════════════════ -->
+<div id="main" class="screen hidden">
+  <div class="app-header">
+    <div class="app-header-top">
+      <div class="app-logo">Fit<span>Forge</span></div>
+      <div class="header-actions">
+        <div class="icon-btn" onclick="openProfile()" title="Perfil">👤</div>
+      </div>
+    </div>
+    <div class="user-greeting" id="user-greeting"></div>
+  </div>
+
+  <div id="plan-banner-wrap"></div>
+  <div class="week-summary" id="week-summary"></div>
+  <div class="week-strip" id="week-strip"></div>
+
+  <div class="day-hero" id="day-hero">
+    <div class="day-hero-glow" id="day-hero-glow"></div>
+    <div class="day-focus-label" id="day-focus-label"></div>
+    <div class="day-name" id="day-name"></div>
+    <div class="day-prog-row">
+      <div class="day-prog-label">Hoje: <strong id="day-prog-text">0/0</strong></div>
+      <div class="day-prog-track"><div class="day-prog-fill" id="day-prog-fill"></div></div>
+      <div class="day-prog-pct" id="day-prog-pct">0%</div>
+    </div>
+  </div>
+
+  <div class="ex-list pb-safe" id="ex-list"></div>
+
+</div>
+
+<!-- ══ PROFILE PANEL ══════════════════════════════════ -->
+<div id="profile-panel" class="profile-panel">
+  <div class="profile-header">
+    <div class="profile-avatar">💪</div>
+    <div>
+      <div class="profile-name" id="p-name"></div>
+      <div class="profile-meta" id="p-meta"></div>
+    </div>
+  </div>
+  <div class="profile-stats" id="p-stats"></div>
+  <div class="section-title">MEU PLANO</div>
+  <div class="menu-item" onclick="showPlanInfo()">
+    <div class="menu-icon" style="background:rgba(255,90,31,.15)">📋</div>
+    <div class="menu-text">Ver detalhes do plano</div>
+    <span class="menu-arrow">›</span>
+  </div>
+  <div class="menu-item" onclick="resetProgress()">
+    <div class="menu-icon" style="background:rgba(0,232,122,.1)">🔄</div>
+    <div class="menu-text">Reiniciar progresso da semana</div>
+    <span class="menu-arrow">›</span>
+  </div>
+  <div class="section-title mt8">CONFIGURAÇÕES</div>
+  <div class="menu-item" onclick="if(confirm('Isso vai apagar todos os dados e criar um novo treino. Confirmar?'))restartApp()">
+    <div class="menu-icon" style="background:rgba(255,80,80,.1)">🗑️</div>
+    <div class="menu-text danger-text">Refazer treino do zero</div>
+    <span class="menu-arrow">›</span>
+  </div>
+  <div style="height:40px"></div>
+  <div style="padding:0 22px 16px">
+    <button class="btn-secondary" onclick="closeProfile()">← Voltar ao treino</button>
+  </div>
+</div>
+
+<!-- ══ ADD MODAL ══════════════════════════════════════ -->
+<div id="add-modal" class="modal-overlay hidden" onclick="closeModal(event)">
+  <div class="modal" onclick="e=>e.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Adicionar Exercício</div>
+    <div class="field">
+      <label>Dia da semana</label>
+      <select id="add-day"></select>
+    </div>
+    <div class="field">
+      <label>Nome do exercício</label>
+      <input id="add-name" type="text" placeholder="Ex: Agachamento livre"/>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Séries x Reps</label>
+        <input id="add-sets" type="text" placeholder="3x12"/>
+      </div>
+      <div class="field">
+        <label>Descanso</label>
+        <input id="add-rest" type="text" placeholder="90s"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Como fazer (opcional)</label>
+      <input id="add-how" type="text" placeholder="Dica de execução..."/>
+    </div>
+    <button class="btn-primary mt8" onclick="addExercise()">Adicionar ao treino</button>
+  </div>
+</div>
+
+<!-- ══ TOAST ══════════════════════════════════════════ -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ─── CONSTANTS & STATE ────────────────────────────────────────────────────────
+const DAYS_PT = ["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"];
+const DAYS_SHORT = ["SEG","TER","QUA","QUI","SEX","SÁB","DOM"];
+const IMG = {
+  "Supino Reto":"https://muscles.wiki/img/exercises/dumbbell_bench_press.gif",
+  "Supino Inclinado":"https://muscles.wiki/img/exercises/incline_dumbbell_press.gif",
+  "Crucifixo":"https://muscles.wiki/img/exercises/cable_crossover.gif",
+  "Flexão":"https://muscles.wiki/img/exercises/push_up.gif",
+  "Peck Deck":"https://muscles.wiki/img/exercises/pec_deck.gif",
+  "Puxada":"https://muscles.wiki/img/exercises/lat_pulldown.gif",
+  "Remada Baixa":"https://muscles.wiki/img/exercises/seated_cable_row.gif",
+  "Remada Unilateral":"https://muscles.wiki/img/exercises/one_arm_dumbbell_row.gif",
+  "Pulldown":"https://muscles.wiki/img/exercises/straight_arm_pulldown.gif",
+  "Hiperextensão":"https://muscles.wiki/img/exercises/back_extension.gif",
+  "Agachamento":"https://muscles.wiki/img/exercises/smith_machine_squat.gif",
+  "Leg Press":"https://muscles.wiki/img/exercises/leg_press.gif",
+  "Cadeira Extensora":"https://muscles.wiki/img/exercises/leg_extension.gif",
+  "Mesa Flexora":"https://muscles.wiki/img/exercises/lying_leg_curl.gif",
+  "Panturrilha":"https://muscles.wiki/img/exercises/standing_calf_raise.gif",
+  "Desenvolvimento":"https://muscles.wiki/img/exercises/dumbbell_shoulder_press.gif",
+  "Elevação Lateral":"https://muscles.wiki/img/exercises/dumbbell_lateral_raise.gif",
+  "Elevação Frontal":"https://muscles.wiki/img/exercises/front_raise.gif",
+  "Crucifixo Invertido":"https://muscles.wiki/img/exercises/reverse_pec_deck.gif",
+  "Encolhimento":"https://muscles.wiki/img/exercises/dumbbell_shrug.gif",
+  "Rosca Direta":"https://muscles.wiki/img/exercises/barbell_curl.gif",
+  "Rosca Martelo":"https://muscles.wiki/img/exercises/hammer_curl.gif",
+  "Rosca Concentrada":"https://muscles.wiki/img/exercises/concentration_curl.gif",
+  "Tríceps Pulley":"https://muscles.wiki/img/exercises/tricep_pushdown.gif",
+  "Tríceps Testa":"https://muscles.wiki/img/exercises/skull_crusher.gif",
+  "Deadlift":"https://muscles.wiki/img/exercises/barbell_deadlift.gif",
+  "Stiff":"https://muscles.wiki/img/exercises/romanian_deadlift.gif",
+  "Afundo":"https://muscles.wiki/img/exercises/lunge.gif",
+  "Glúteo":"https://muscles.wiki/img/exercises/hip_thrust.gif",
+  "Abdominal":"https://muscles.wiki/img/exercises/crunch.gif",
+  "Prancha":"https://muscles.wiki/img/exercises/plank.gif",
+};
+
+function getImgUrl(name) {
+  for (const [key, url] of Object.entries(IMG)) {
+    if (name.toLowerCase().includes(key.toLowerCase())) return url;
+  }
+  return null;
+}
+
+let state = {
+  profile: null,
+  plan: null,
+  completed: {},
+  activeDay: 0,
+  expandedEx: {},
+  activeTabs: {},
+};
+
+// ─── PERSISTENCE ──────────────────────────────────────────────────────────────
+function save() {
+  localStorage.setItem('fitforge_state', JSON.stringify(state));
+}
+function load() {
+  try {
+    const s = localStorage.getItem('fitforge_state');
+    if (s) state = JSON.parse(s);
+  } catch(e) {}
+}
+
+// ─── SCREEN TRANSITIONS ───────────────────────────────────────────────────────
+function goTo(from, to) {
+  const f = document.getElementById(from);
+  const t = document.getElementById(to);
+  f.classList.add('slide-left');
+  setTimeout(() => { f.classList.add('hidden'); f.classList.remove('slide-left'); }, 350);
+  t.classList.remove('hidden');
+  t.classList.add('slide-left');
+  requestAnimationFrame(() => { t.classList.remove('slide-left'); });
+}
+function showScreen(id) {
+  ['splash','onboarding','generating','main'].forEach(s => {
+    const el = document.getElementById(s);
+    if (s === id) { el.classList.remove('hidden'); }
+    else { el.classList.add('hidden'); }
+  });
+}
+
+function tryLoadExisting() {
+  load();
+  if (state.plan) { showScreen('main'); initMain(); }
+  else { showToast('Nenhum treino salvo. Crie um novo!'); }
+}
+
+// ─── ONBOARDING STEPS ─────────────────────────────────────────────────────────
+const OB_STEPS = [
+  {
+    label: "Passo 1 de 7", tag: "QUEM É VOCÊ",
+    title: "Vamos nos conhecer! 👋",
+    sub: "Essas informações ajudam a IA a criar um treino feito especialmente para você.",
+    type: "fields",
+    fields: [
+      { id:"name", label:"Seu nome", type:"text", placeholder:"Como podemos te chamar?" },
+      { id:"age", label:"Sua idade", type:"number", placeholder:"Ex: 28", hint:"A idade influencia na intensidade e recuperação" },
+      { id:"sex", label:"Sexo biológico", type:"select", options:[{v:"",l:"Selecione..."},{v:"masculino",l:"Masculino"},{v:"feminino",l:"Feminino"}] }
+    ]
+  },
+  {
+    label: "Passo 2 de 7", tag: "SEU CORPO",
+    title: "Suas medidas 📏",
+    sub: "Usamos isso para calcular sua carga ideal e ajustar os exercícios ao seu biotipo.",
+    type: "fields",
+    fields: [
+      { id:"weight", label:"Peso (kg)", type:"number", placeholder:"Ex: 72" },
+      { id:"height", label:"Altura (cm)", type:"number", placeholder:"Ex: 175" },
+    ]
+  },
+  {
+    label: "Passo 3 de 7", tag: "SEU OBJETIVO",
+    title: "O que você quer alcançar? 🎯",
+    sub: "Escolha o objetivo principal. Isso define toda a estrutura do seu treino.",
+    type: "options",
+    id: "goal",
+    options: [
+      { v:"emagrecer", icon:"🔥", label:"Emagrecer", sub:"Queimar gordura e definir o corpo" },
+      { v:"hipertrofia", icon:"💪", label:"Ganhar massa", sub:"Aumentar músculos e ganhar força" },
+      { v:"definicao", icon:"✂️", label:"Definição", sub:"Tonificar e dar forma ao corpo" },
+      { v:"condicionamento", icon:"❤️", label:"Condicionamento", sub:"Melhorar resistência e saúde" },
+      { v:"forca", icon:"🏋️", label:"Força", sub:"Levantamento e força máxima" },
+      { v:"estetica", icon:"⭐", label:"Estética geral", sub:"Visual equilibrado e saudável" },
+    ]
+  },
+  {
+    label: "Passo 4 de 7", tag: "SUA EXPERIÊNCIA",
+    title: "Qual seu nível atual? 📊",
+    sub: "Seja honesto! Isso define a complexidade dos exercícios e as cargas sugeridas.",
+    type: "options",
+    id: "level",
+    options: [
+      { v:"iniciante", icon:"🌱", label:"Iniciante", sub:"Menos de 6 meses de treino" },
+      { v:"intermediario", icon:"⚡", label:"Intermediário", sub:"6 meses a 2 anos treinando" },
+      { v:"avancado", icon:"🔥", label:"Avançado", sub:"Mais de 2 anos, boa base técnica" },
+    ]
+  },
+  {
+    label: "Passo 5 de 7", tag: "DIAS DE TREINO",
+    title: "Quantos dias por semana? 📅",
+    sub: "Escolha os dias em que você consegue treinar consistentemente.",
+    type: "days",
+    id: "training_days"
+  },
+  {
+    label: "Passo 6 de 7", tag: "EQUIPAMENTOS",
+    title: "Onde você treina? 🏠",
+    sub: "Assim saberemos quais exercícios são possíveis para você.",
+    type: "options",
+    id: "equipment",
+    options: [
+      { v:"academia_completa", icon:"🏋️", label:"Academia completa", sub:"Todos os equipamentos disponíveis" },
+      { v:"academia_basica", icon:"🔩", label:"Academia básica", sub:"Equipamentos essenciais" },
+      { v:"casa_halteres", icon:"🏠", label:"Casa com halteres", sub:"Halteres e banco em casa" },
+      { v:"casa_sem", icon:"🧘", label:"Casa sem equipamento", sub:"Só o peso do corpo" },
+    ]
+  },
+  {
+    label: "Passo 7 de 7", tag: "RESTRIÇÕES",
+    title: "Alguma limitação? ⚠️",
+    sub: "Nos informe se há alguma área do corpo que devemos evitar ou adaptar.",
+    type: "options",
+    id: "restrictions",
+    multi: true,
+    options: [
+      { v:"nenhuma", icon:"✅", label:"Nenhuma", sub:"Sem limitações físicas" },
+      { v:"joelho", icon:"🦵", label:"Joelho", sub:"Dor ou lesão no joelho" },
+      { v:"lombar", icon:"🔙", label:"Lombar", sub:"Dor ou problema lombar" },
+      { v:"ombro", icon:"💪", label:"Ombro", sub:"Lesão ou dor no ombro" },
+      { v:"cervical", icon:"🦴", label:"Cervical", sub:"Problema no pescoço" },
+    ]
+  }
+];
+
+let obStep = 0;
+let obData = {};
+
+function initOnboarding() {
+  obStep = 0;
+  obData = {};
+  renderObStep();
+}
+
+function renderObProgress() {
+  const prog = document.getElementById('ob-progress');
+  prog.innerHTML = OB_STEPS.map((_, i) => `
+    <div class="ob-prog-bar">
+      <div class="fill" style="width:${i < obStep ? '100' : i === obStep ? '50' : '0'}%"></div>
+    </div>`).join('');
+}
+
+function renderObStep() {
+  const step = OB_STEPS[obStep];
+  document.getElementById('ob-step-counter').textContent = step.label;
+  document.getElementById('ob-step-label').textContent = step.tag;
+  document.getElementById('ob-title').textContent = step.title;
+  document.getElementById('ob-sub').textContent = step.sub;
+  renderObProgress();
+
+  const body = document.getElementById('ob-body');
+
+  if (step.type === 'fields') {
+    body.innerHTML = step.fields.map(f => `
+      <div class="field">
+        <label>${f.label}</label>
+        ${f.type === 'select'
+          ? `<select id="ob_${f.id}" onchange="obData['${f.id}']=this.value">
+              ${f.options.map(o=>`<option value="${o.v}">${o.l}</option>`).join('')}
+             </select>`
+          : `<input id="ob_${f.id}" type="${f.type}" placeholder="${f.placeholder}" 
+               value="${obData[f.id]||''}"
+               oninput="obData['${f.id}']=this.value" inputmode="${f.type==='number'?'numeric':'text'}"/>`
+        }
+        ${f.hint ? `<div class="field-hint">${f.hint}</div>` : ''}
+      </div>`).join('');
+  }
+
+  else if (step.type === 'options') {
+    const selected = obData[step.id] || (step.multi ? [] : '');
+    body.innerHTML = `<div class="options-grid">` +
+      step.options.map(o => {
+        const isSel = step.multi ? (selected.includes(o.v)) : selected === o.v;
+        return `<div class="opt-card ${isSel?'selected':''}" onclick="selectOpt('${step.id}','${o.v}',${!!step.multi})">
+          <span class="opt-icon">${o.icon}</span>
+          <div class="opt-text"><strong>${o.label}</strong><span>${o.sub}</span></div>
+          <div class="opt-check"></div>
+        </div>`;
+      }).join('') + `</div>`;
+  }
+
+  else if (step.type === 'days') {
+    const sel = obData.training_days || [];
+    body.innerHTML = `
+      <div class="days-grid">
+        ${DAYS_PT.map((d,i)=>`
+          <button class="day-tog ${sel.includes(d)?'selected':''}" onclick="toggleDay('${d}')">
+            ${DAYS_SHORT[i]}
+          </button>`).join('')}
+      </div>
+      <div style="font-size:13px;color:var(--muted);text-align:center">
+        ${sel.length} dia${sel.length!==1?'s':''} selecionado${sel.length!==1?'s':''}
+      </div>`;
+  }
+}
+
+function selectOpt(id, val, multi) {
+  if (multi) {
+    let arr = obData[id] || [];
+    if (val === 'nenhuma') { arr = arr.includes('nenhuma') ? [] : ['nenhuma']; }
+    else {
+      arr = arr.filter(v => v !== 'nenhuma');
+      arr.includes(val) ? arr.splice(arr.indexOf(val),1) : arr.push(val);
+    }
+    obData[id] = arr;
+  } else { obData[id] = val; }
+  renderObStep();
+}
+
+function toggleDay(day) {
+  let days = obData.training_days || [];
+  days.includes(day) ? days.splice(days.indexOf(day),1) : days.push(day);
+  obData.training_days = days;
+  renderObStep();
+}
+
+function obValidate() {
+  const step = OB_STEPS[obStep];
+  if (step.type === 'fields') {
+    for (const f of step.fields) {
+      if (!obData[f.id] && f.type !== 'select') { showToast('Preencha todos os campos!'); return false; }
+      if (f.type === 'select' && !obData[f.id]) { showToast('Selecione uma opção!'); return false; }
+    }
+    if (step.fields.find(f=>f.id==='age') && (obData.age < 10 || obData.age > 99)) { showToast('Idade inválida!'); return false; }
+    if (step.fields.find(f=>f.id==='weight') && (obData.weight < 30 || obData.weight > 300)) { showToast('Peso inválido!'); return false; }
+    if (step.fields.find(f=>f.id==='height') && (obData.height < 100 || obData.height > 250)) { showToast('Altura inválida!'); return false; }
+  }
+  if (step.type === 'options' && !step.multi && !obData[step.id]) { showToast('Selecione uma opção!'); return false; }
+  if (step.type === 'options' && step.multi && (!obData[step.id] || !obData[step.id].length)) { showToast('Selecione pelo menos uma opção!'); return false; }
+  if (step.type === 'days' && (!obData.training_days || !obData.training_days.length)) { showToast('Selecione pelo menos 1 dia!'); return false; }
+  return true;
+}
+
+function obNext() {
+  if (!obValidate()) return;
+  if (obStep < OB_STEPS.length - 1) {
+    obStep++;
+    document.getElementById('ob-body').style.opacity = '0';
+    setTimeout(() => { renderObStep(); document.getElementById('ob-body').style.opacity = '1'; }, 150);
+  } else {
+    startGeneration();
+  }
+}
+
+function obBack() {
+  if (obStep === 0) { goTo('onboarding','splash'); return; }
+  obStep--;
+  renderObStep();
+}
+
+// ─── AI GENERATION ────────────────────────────────────────────────────────────
+async function startGeneration() {
+  goTo('onboarding','generating');
+  const steps = ['gs1','gs2','gs3','gs4','gs5'];
+  let si = 0;
+  const stepInterval = setInterval(() => {
+    if (si < steps.length) {
+      document.getElementById(steps[si]).classList.add('done');
+      si++;
+      if (si < steps.length) document.getElementById(steps[si]).classList.add('active');
+    }
+  }, 800);
+
+  try {
+    const plan = await generatePlan();
+    clearInterval(stepInterval);
+    steps.forEach(s => document.getElementById(s).classList.add('done'));
+    state.profile = obData;
+    state.plan = plan;
+    state.completed = {};
+    state.activeDay = 0;
+    save();
+    setTimeout(() => { showScreen('main'); initMain(); }, 600);
+  } catch(err) {
+    clearInterval(stepInterval);
+    console.error(err);
+    showToast('Erro ao gerar treino. Usando plano padrão...');
+    const fallback = buildFallbackPlan(obData);
+    state.profile = obData;
+    state.plan = fallback;
+    state.completed = {};
+    state.activeDay = 0;
+    save();
+    setTimeout(() => { showScreen('main'); initMain(); }, 1200);
+  }
+}
+
+async function generatePlan() {
+  const p = obData;
+  const imc = (p.weight / ((p.height/100)**2)).toFixed(1);
+  const daysCount = (p.training_days||[]).length;
+
+  const prompt = `Você é um personal trainer certificado e especialista em prescrição de treino. 
+Crie um plano de treino semanal PERSONALIZADO e DETALHADO em português brasileiro para esta pessoa:
+
+PERFIL:
+- Nome: ${p.name}
+- Idade: ${p.age} anos, Sexo: ${p.sex}
+- Peso: ${p.weight}kg, Altura: ${p.height}cm, IMC: ${imc}
+- Objetivo principal: ${p.goal}
+- Nível de experiência: ${p.level}
+- Dias disponíveis: ${(p.training_days||[]).join(', ')} (${daysCount} dias/semana)
+- Local/equipamentos: ${p.equipment}
+- Restrições físicas: ${(p.restrictions||[]).join(', ')||'nenhuma'}
+
+Retorne APENAS um JSON válido (sem markdown, sem texto extra) com esta estrutura exata:
+{
+  "plan_name": "Nome criativo do plano",
+  "description": "Descrição em 1 frase do plano",
+  "days": {
+    "${(p.training_days||['Segunda'])[0]}": {
+      "focus": "GRUPO MUSCULAR / FOCO",
+      "color": "#HEXCOLOR",
+      "exercises": [
+        {
+          "name": "Nome do exercício",
+          "sets": "3x12",
+          "rest": "60s",
+          "intro": "Breve introdução explicando para que serve e qual músculo trabalha (2 frases simples)",
+          "steps": ["Passo detalhado 1 com emoji", "Passo 2", "Passo 3", "Passo 4", "Passo 5"],
+          "mistakes": "Principal erro de iniciante e como evitar",
+          "feel": "O que a pessoa deve sentir durante o exercício"
+        }
+      ]
+    }
+  }
+}
+
+REGRAS IMPORTANTES:
+- Coloque exatamente 5 exercícios por dia
+- Adapte os exercícios ao local/equipamento disponível
+- Se houver restrições, EVITE exercícios que agravem a condição
+- Adapte séries/reps ao nível: iniciante=3x12-15, intermediário=4x10-12, avançado=4-5x8-12
+- Use cores diferentes e vibrantes para cada dia (hex)
+- Os passos devem ser bem detalhados e com emojis (mínimo 5 passos por exercício)
+- Distribua os grupos musculares de forma inteligente com dias de descanso entre grupos similares
+- Para objetivo emagrecer: inclua mais exercícios compostos e HIIT
+- Para hipertrofia: foque em exercícios de isolamento + compostos com progressão
+- Para condicionamento: circuitos e exercícios funcionais`;
+
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 4000,
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+
+  const data = await response.json();
+  const text = data.content[0].text;
+  const clean = text.replace(/```json|```/g,'').trim();
+  return JSON.parse(clean);
+}
+
+function buildFallbackPlan(p) {
+  const days = p.training_days || ['Segunda','Terça','Quarta','Quinta','Sexta'];
+  const focuses = ['PEITO + TRÍCEPS','COSTAS + BÍCEPS','PERNAS','OMBROS','ABDÔMEN + CARDIO'];
+  const colors = ['#FF5C5C','#5C8FFF','#00C896','#FFB84B','#C84BFF'];
+  const plan = { plan_name: "Plano Base Personalizado", description: "Treino adaptado ao seu perfil", days: {} };
+  days.slice(0,5).forEach((day,i) => {
+    plan.days[day] = {
+      focus: focuses[i % focuses.length],
+      color: colors[i % colors.length],
+      exercises: [
+        { name:"Supino Reto com Halteres", sets:"3x12", rest:"90s", intro:"Trabalha o peito.", steps:["Deite no banco","Segure os halteres","Empurre para cima","Desça controlado","Repita"], mistakes:"Não abra demais os cotovelos.", feel:"Queimação no peito." },
+        { name:"Puxada Frontal", sets:"3x12", rest:"90s", intro:"Trabalha as costas.", steps:["Sente na máquina","Segure a barra","Puxe até a clavícula","Suba devagar","Repita"], mistakes:"Não puxe para a nuca.", feel:"Costas contraindo." },
+        { name:"Agachamento", sets:"3x12", rest:"90s", intro:"Trabalha as pernas.", steps:["Pés na largura dos ombros","Desça como sentar","90° no joelho","Suba empurrando","Repita"], mistakes:"Não deixe os joelhos caírem.", feel:"Coxas e glúteos queimando." },
+        { name:"Desenvolvimento", sets:"3x12", rest:"75s", intro:"Trabalha os ombros.", steps:["Segure os halteres","Cotovelos a 90°","Empurre para cima","Desça controlado","Repita"], mistakes:"Não arqueie as costas.", feel:"Ombro frontal trabalhando." },
+        { name:"Rosca Direta", sets:"3x12", rest:"60s", intro:"Trabalha o bíceps.", steps:["Segure a barra","Cotovelos fixos","Curve os braços","Aperte no topo","Desça lento"], mistakes:"Não balance o corpo.", feel:"Bíceps contraindo forte." }
+      ]
+    };
+  });
+  return plan;
+}
+
+// ─── MAIN APP ─────────────────────────────────────────────────────────────────
+function initMain() {
+  const p = state.profile;
+  const plan = state.plan;
+  if (!p || !plan) return;
+
+  // Greeting
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+  document.getElementById('user-greeting').innerHTML = `${greet}, <strong>${p.name}!</strong> 🔥`;
+
+  // Plan banner
+  const planBanner = document.getElementById('plan-banner-wrap');
+  if (planBanner && plan) {
+    planBanner.innerHTML = `<div class="plan-banner">
+      <span class="plan-banner-icon">⚡</span>
+      <div class="plan-banner-text">
+        <strong>${plan.plan_name || 'Meu Plano'}</strong>
+        <span>${plan.description || 'Plano personalizado para você'}</span>
+      </div>
+    </div>`;
+  }
+
+  // Week summary
+  const totalEx = Object.values(plan.days).reduce((a,d)=>a+(d.exercises||[]).length,0);
+  const doneEx = Object.keys(state.completed).filter(k=>state.completed[k]).length;
+  const totalDays = Object.keys(plan.days).length;
+  const doneDays = Object.keys(plan.days).filter(d=> (plan.days[d].exercises||[]).every((_,i)=>state.completed[`${d}-${i}`])).length;
+  document.getElementById('week-summary').innerHTML = `
+    <div class="sum-card"><div class="sum-val" style="color:var(--accent)">${doneEx}/${totalEx}</div><div class="sum-label">Exercícios</div></div>
+    <div class="sum-card"><div class="sum-val" style="color:var(--green)">${doneDays}/${totalDays}</div><div class="sum-label">Dias</div></div>
+    <div class="sum-card"><div class="sum-val" style="color:var(--gold)">${p.weight}kg</div><div class="sum-label">Peso atual</div></div>`;
+
+  // Fill add-day select
+  const sel = document.getElementById('add-day');
+  sel.innerHTML = Object.keys(plan.days).map(d=>`<option value="${d}">${d}</option>`).join('');
+
+  renderWeekStrip();
+  renderDay();
+}
+
+function renderWeekStrip() {
+  const plan = state.plan;
+  const days = Object.keys(plan.days);
+  const strip = document.getElementById('week-strip');
+  strip.innerHTML = days.map((day,i) => {
+    const d = plan.days[day];
+    const exs = d.exercises || [];
+    const done = exs.filter((_,j)=>state.completed[`${day}-${j}`]).length;
+    const allDone = done === exs.length && exs.length > 0;
+    const isActive = i === state.activeDay;
+    return `<div class="wd-btn ${isActive?'active':''} ${allDone?'complete':''}" onclick="setDay(${i})">
+      <span class="wd-label">${DAYS_SHORT[DAYS_PT.indexOf(day)] || day.substring(0,3).toUpperCase()}</span>
+      <div class="wd-dot" style="${isActive?'':'background:'+(allDone?'var(--green)':'rgba(255,255,255,.15)')}"></div>
+    </div>`;
+  }).join('');
+}
+
+function setDay(idx) {
+  state.activeDay = idx;
+  state.expandedEx = {};
+  save();
+  renderWeekStrip();
+  renderDay();
+}
+
+function renderDay() {
+  const plan = state.plan;
+  const days = Object.keys(plan.days);
+  const dayName = days[state.activeDay];
+  const day = plan.days[dayName];
+  if (!day) return;
+  const color = day.color || 'var(--accent)';
+  const exs = day.exercises || [];
+  const done = exs.filter((_,i)=>state.completed[`${dayName}-${i}`]).length;
+  const pct = exs.length ? Math.round(done/exs.length*100) : 0;
+
+  document.getElementById('day-hero-glow').style.background = color;
+  document.getElementById('day-focus-label').textContent = day.focus || '';
+  document.getElementById('day-focus-label').style.color = color;
+  document.getElementById('day-name').textContent = dayName.toUpperCase();
+  document.getElementById('day-prog-text').textContent = `${done}/${exs.length}`;
+  document.getElementById('day-prog-text').style.color = color;
+  document.getElementById('day-prog-fill').style.width = pct+'%';
+  document.getElementById('day-prog-fill').style.background = `linear-gradient(90deg,${color}88,${color})`;
+  document.getElementById('day-prog-pct').textContent = pct+'%';
+  document.getElementById('day-prog-pct').style.color = color;
+
+  let html = '';
+  if (!exs.length) {
+    html = `<div class="empty-state"><div class="empty-icon">🌙</div><div class="empty-text">Dia de descanso.<br>Aproveite para recuperar os músculos!</div></div>`;
+  } else {
+    exs.forEach((ex, i) => {
+      const key = `${dayName}-${i}`;
+      const isDone = !!state.completed[key];
+      const isOpen = !!state.expandedEx[key];
+      const tab = state.activeTabs[key] || 'steps';
+      const imgUrl = getImgUrl(ex.name);
+
+      let expandedHtml = '';
+      if (isOpen) {
+        const imgHtml = imgUrl ? `
+          <div class="ex-img-wrap">
+            <div class="ex-img-loader" id="loader_${i}"><div class="spinner" style="border-top-color:${color}"></div></div>
+            <img class="ex-img" src="${imgUrl}" alt="${ex.name}" loading="lazy"
+              onload="const l=document.getElementById('loader_${i}');if(l)l.style.display='none';"
+              onerror="this.parentElement.style.display='none'"/>
+          </div>` : '';
+
+        const stepsHtml = (ex.steps||[]).map((s,si)=>`
+          <div class="step-item">
+            <span class="step-num" style="background:${color}22;color:${color}">${si+1}</span>
+            <span class="step-text">${s}</span>
+          </div>`).join('');
+
+        expandedHtml = `<div class="ex-expanded">
+          ${imgHtml}
+          <div class="ex-details">
+            <div class="intro-box" style="background:${color}11;border:1px solid ${color}22">${ex.intro||''}</div>
+            <div class="tabs">
+              <button class="tab-btn ${tab==='steps'?'active':''}" style="${tab==='steps'?'background:'+color+';color:#000':''}" onclick="setTab('${key}','steps')">📋 Como Fazer</button>
+              <button class="tab-btn ${tab==='mistakes'?'active':''}" style="${tab==='mistakes'?'background:'+color+';color:#000':''}" onclick="setTab('${key}','mistakes')">⚠️ Erros</button>
+              <button class="tab-btn ${tab==='feel'?'active':''}" style="${tab==='feel'?'background:'+color+';color:#000':''}" onclick="setTab('${key}','feel')">🔥 Sensação</button>
             </div>
-        </div>
-    </header>
-    
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Restaurante Tia Chica</h1>
-            <p class="hero-subtitle">Self-Service tradicional e Churrasco à vontade em Jacareí</p>
-            <div class="pricing-hero">
-                <h3>Churrasco à Vontade</h3>
-                <div class="price-big">R$ 41,90</div>
-                <small style="opacity: 0.8;">Por pessoa</small>
+            ${tab==='steps'?`<div>${stepsHtml}</div>`:''}
+            ${tab==='mistakes'?`<div class="info-box mistake-box">${ex.mistakes||''}</div>`:''}
+            ${tab==='feel'?`<div class="info-box" style="background:${color}0D;border:1px solid ${color}25">${ex.feel||''}</div>`:''}
+          </div>
+        </div>`;
+      }
+
+      html += `<div class="ex-card ${isDone?'done':''}" id="excard_${i}">
+        <div class="ex-top">
+          <div class="ex-check ${isDone?'done':''}" style="${isDone?'background:'+color:''}" onclick="toggleDone('${dayName}',${i})"></div>
+          <div class="ex-info" onclick="toggleDone('${dayName}',${i})">
+            <div class="ex-name ${isDone?'done':''}">${ex.name}</div>
+            <div class="ex-badges">
+              <span class="badge" style="background:${color}22;color:${color}">${ex.sets}</span>
+              <span class="badge badge-rest">⏱ ${ex.rest}</span>
+              <button class="how-btn" onclick="event.stopPropagation();toggleExpand('${key}')">${isOpen?'▲ Fechar':'📋 Como fazer'}</button>
             </div>
+          </div>
+          <div class="ex-num">${String(i+1).padStart(2,'0')}</div>
         </div>
-    </section>
-    
-    <section id="precos" style="background: var(--light);">
-        <div class="container">
-            <h2 class="section-title">Nossos Planos</h2>
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <div class="price-icon">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <h3 class="price-title">Churrasco à Vontade</h3>
-                    <div class="price-value">R$ 41,90</div>
-                    <p class="price-desc">Self-service completo com churrasco ilimitado. Venha comer à vontade!</p>
-                </div>
-                <div class="price-card">
-                    <div class="price-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3 class="price-title">Self-Service Kg</h3>
-                    <div class="price-value">R$ 75,00</div>
-                    <p class="price-desc">Monte seu prato perfeito! Qualidade pelo peso justo.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="info">
-        <div class="container">
-            <h2 class="section-title">Informações</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3 class="info-title">Horário de Funcionamento</h3>
-                    <p><strong>Segunda a Sexta</strong><br>07:00 às 19:00</p>
-                    <p><strong>Sábado</strong><br>08:00 às 16:00</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="info-title">Nosso Endereço</h3>
-                    <p>Rod. Nicola Capucci, 265<br>
-                    Arthur Ville, Jacareí - SP<br>
-                    CEP: 12326-491</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3 class="info-title">Fale Conosco</h3>
-                    <p><strong>WhatsApp</strong><br>
-                    (12) 98844-4600</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="localizacao" style="background: var(--light);">
-        <div class="container">
-            <h2 class="section-title">Encontre-nos</h2>
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3676.1234567890123!2d-45.9654321!3d-23.2998765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce58f7f7f7f7f7%3A0x123456789abcdef!2sRod.+Nicola+Capucci%2C+265+-+Arthur+Ville%2C+Jacare%C3%AD+-+SP%2C+12326-491!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" 
-                width="100%" 
-                height="500" 
-                style="border:0; border-radius: 25px;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </section>
-    
-    <a href="https://wa.me/5512988444600?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20o%20Restaurante%20Tia%20Chica!" class="whatsapp-btn" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 Restaurante Tia Chica. Todos os direitos reservados.</p>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Rod. Nicola Capucci, 265 - Jacareí/SP | (12) 98844-4600</p>
-            </div>
-        </div>
-    </footer>
+        ${expandedHtml}
+      </div>`;
+    });
+
+    if (done === exs.length && done > 0) {
+      html += `<div style="text-align:center;padding:28px 20px;background:${day.color}0F;border-radius:20px;border:1px solid ${day.color}33;margin-bottom:12px">
+        <div style="font-size:36px;margin-bottom:8px">🏆</div>
+        <div style="font-family:var(--font-display);font-size:26px;font-weight:800;letter-spacing:2px">DIA CONCLUÍDO!</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:6px">Incrível, ${state.profile.name}! Descanse e hidrate-se 💧</div>
+      </div>`;
+    }
+  }
+  const addBtn = `
+    <button class="add-ex-btn" onclick="openAddModal()">
+      <span class="add-icon">＋</span>
+      Adicionar exercício ao ${dayName}
+    </button>`;
+  document.getElementById('ex-list').innerHTML = html + addBtn;
+}
+
+function toggleDone(day, idx) {
+  const key = `${day}-${idx}`;
+  state.completed[key] = !state.completed[key];
+  save();
+  renderWeekStrip();
+  renderDay();
+  if (state.completed[key]) showToast('Exercício concluído! 💪');
+}
+
+function toggleExpand(key) {
+  state.expandedEx[key] = !state.expandedEx[key];
+  if (!state.activeTabs[key]) state.activeTabs[key] = 'steps';
+  renderDay();
+}
+
+function setTab(key, tab) {
+  state.activeTabs[key] = tab;
+  renderDay();
+}
+
+// ─── ADD EXERCISE ─────────────────────────────────────────────────────────────
+function openAddModal() {
+  document.getElementById('add-modal').classList.remove('hidden');
+}
+function closeModal(e) {
+  if (e.target.id === 'add-modal') document.getElementById('add-modal').classList.add('hidden');
+}
+function addExercise() {
+  const day = document.getElementById('add-day').value;
+  const name = document.getElementById('add-name').value.trim();
+  const sets = document.getElementById('add-sets').value.trim() || '3x12';
+  const rest = document.getElementById('add-rest').value.trim() || '60s';
+  const how = document.getElementById('add-how').value.trim();
+
+  if (!name) { showToast('Digite o nome do exercício!'); return; }
+  if (!state.plan.days[day]) {
+    state.plan.days[day] = { focus: 'PERSONALIZADO', color: 'var(--accent)', exercises: [] };
+  }
+  state.plan.days[day].exercises.push({
+    name, sets, rest,
+    intro: how || 'Exercício adicionado manualmente.',
+    steps: how ? [how] : ['Execute o movimento de forma controlada.'],
+    mistakes: 'Mantenha a técnica correta durante toda a série.',
+    feel: 'Foco no músculo alvo durante o movimento.'
+  });
+  save();
+  document.getElementById('add-modal').classList.add('hidden');
+  document.getElementById('add-name').value = '';
+  document.getElementById('add-sets').value = '';
+  document.getElementById('add-rest').value = '';
+  document.getElementById('add-how').value = '';
+  renderWeekStrip();
+  renderDay();
+  showToast('Exercício adicionado! ✅');
+}
+
+// ─── PROFILE PANEL ────────────────────────────────────────────────────────────
+function openProfile() {
+  const p = state.profile;
+  const plan = state.plan;
+  if (!p) return;
+  document.getElementById('p-name').textContent = p.name;
+  const imc = (p.weight/((p.height/100)**2)).toFixed(1);
+  document.getElementById('p-meta').textContent = `${p.age} anos • ${p.sex} • IMC ${imc}`;
+  document.getElementById('p-stats').innerHTML = `
+    <div class="pstat"><div class="pstat-val">${p.weight}kg</div><div class="pstat-label">Peso</div></div>
+    <div class="pstat"><div class="pstat-val">${p.height}cm</div><div class="pstat-label">Altura</div></div>
+    <div class="pstat"><div class="pstat-val">${Object.keys(plan?.days||{}).length}x</div><div class="pstat-label">Dias/sem</div></div>`;
+  document.getElementById('profile-panel').classList.add('open');
+}
+function closeProfile() {
+  document.getElementById('profile-panel').classList.remove('open');
+}
+function showPlanInfo() {
+  const plan = state.plan;
+  alert(`${plan.plan_name}\n\n${plan.description}`);
+}
+function resetProgress() {
+  if (confirm('Reiniciar progresso da semana?')) {
+    state.completed = {};
+    save();
+    renderWeekStrip();
+    renderDay();
+    closeProfile();
+    showToast('Progresso reiniciado! 💪');
+  }
+}
+function restartApp() {
+  localStorage.clear();
+  location.reload();
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimeout;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── PWA ──────────────────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+load();
+if (state.profile && state.plan) {
+  showScreen('main');
+  initMain();
+} else {
+  showScreen('splash');
+}
+</script>
 </body>
 </html>
